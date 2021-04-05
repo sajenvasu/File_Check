@@ -1,23 +1,17 @@
 /*
-
 Features in the Program (List is specified as a Linked List)
-
 1. Read from Files
     a. Read Password_File (This is needed when modifying a list)
     b. Read PathList_File (This is where the Path of the files are stored)
-
 2. Menu
     a. Test List
     b. Modify List
-
 3. Settings (AKA Modify List)
     a. Print List
     b. Add to List
     c. Delete a path from the List
     d. Clear List Completely
-
 4. If changes occurred save all the files else skip this step (Use Global Variables to keep track if the files got edited)
-
 */
 
 import java.util.*;
@@ -25,8 +19,8 @@ import java.io.*;
 
 public class File_Check{
 
-    String Name;
-    String Pin;
+    static String Name;
+    static String Pin;
 
     public static void main(String[] args){
 
@@ -35,8 +29,8 @@ public class File_Check{
         Read();
 
         System.out.println("|---------------------------|");
-        System.out.println("Welcome: " + );
-
+        System.out.println("Welcome: " + Name + ",\n");
+        
         while (Run == 1){
 
             Scanner Scanner = new Scanner(System.in);
@@ -69,14 +63,12 @@ public class File_Check{
 
     public static void Read(){
 
-        String Name;
-        String Pin = null;
         Scanner Scanner = new Scanner(System.in);
 
-        File File1 = new File("File Check Program Files/pin.txt");
+        File File1 = new File("File Check Program Files" + File.separator + "pin.txt");
         boolean EXST1 = File1.exists();
 
-        File File2 = new File("File Check Program Files/path.txt");
+        File File2 = new File("File Check Program Files" + File.separator + "path.txt");
         boolean EXST2 = File2.exists();
         
         if(EXST1 == false){
@@ -104,9 +96,24 @@ public class File_Check{
         if (EXST2 == false){
             Write(null, null, 2); 
         }
-
-            Name = "test";
-            Pin = "dsad";
+        
+        try{
+            FileReader fr = new FileReader("File Check Program Files" + File.separator + "pin.txt");
+            BufferedReader br = new BufferedReader(fr);
+            
+            String str; 
+            int loop = 0;
+            while ((str = br.readLine()) != null){
+                if (loop == 0){
+                    String[] StrArray = str.split(";");
+                    Name = StrArray[0];
+                    Pin = StrArray[1];
+                }
+                loop++;     
+            }
+        }catch(IOException e){
+            System.out.println("Error: Code 2001\n");
+        }
 
         System.out.println("");
 
@@ -114,26 +121,25 @@ public class File_Check{
 
     public static void Write(String Data, String Data2, int key){
         
+        try {
+            File DIR = new File("File Check Program Files");
+            DIR.mkdir();
+        } catch (Exception e) {
+            System.out.println("Error: Code 3000\n");
+        }
+
         if (key == 1){
-            try{
-                File File1 = new File("File Check Program Files/pin.txt");
-                File1.createNewFile();
-                FileWriter Writer = new FileWriter(File1);
-                Writer.write( Data + ";" + Data2);
-                Writer.close();
-
-            }catch (IOException e){
-                System.out.println("Error: Code 1");
-                e.printStackTrace();
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter("File Check Program Files" + File.separator + "pin.txt"))){
+                writer.write( Data + ";" + Data2);
+                writer.close();
+            }catch (Exception ex){
+                System.out.println("Error: Code 1001\n");
             }
-
         } else if (key == 2){
-            try{
-                File File2 = new File("File Check Program Files/path.txt");
-                File2.createNewFile();
-            }catch (IOException e){
-                System.out.println("Error: Code 2");
-                e.printStackTrace();
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter("File Check Program Files" + File.separator + "path.txt"))){
+                writer.close();
+            }catch (Exception ex){
+                System.out.println("Error: Code 1002\n");
             }
         }
 
