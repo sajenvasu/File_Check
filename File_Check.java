@@ -19,6 +19,7 @@ Features in the Program (List is specified as a Linked List)
 
 import java.util.*;
 import java.io.*;
+import java.lang.Math;
 
 public class File_Check{
 
@@ -48,13 +49,36 @@ public class File_Check{
             String choice = Scanner.nextLine();
 
             if (choice.equals("1")){
-                
-                System.out.println("\nTesting Files\n");
                 int size = File_Paths.size();
-                for(int i = 0; i < size; i++){
-                    System.out.println(File_Paths.get(i));
-                }
+                int biggestPath = 0;
 
+                for(int i = 0; i < size; i++){
+                    String temp = File_Paths.get(i);
+                    if (biggestPath < temp.length()){
+                        biggestPath = temp.length();
+                    }
+                }
+                double db_biggestPath = (double) (biggestPath);
+                double db_biggestPathdiv8 = db_biggestPath / 8;
+                double rnd_db_biggestPathdiv8 = Math.ceil(db_biggestPathdiv8);
+                int biggestPathdiv8 = (int) rnd_db_biggestPathdiv8;
+
+                if (size == 0){
+                    System.out.println("\nNo Files to Test");
+                }else{
+                    System.out.println("\nTesting Files\n");
+                    for(int i = 0; i < size; i++){
+                        System.out.print("File " + i + "\t");
+                        String Path = File_Paths.get(i);
+                        int lengthofPath = Path.length();
+                        double db_lengthofPath = (double) lengthofPath;
+                        double db_lengthofPathdiv8 = db_lengthofPath / 8;
+                        double rnd_db_lengthofPathdiv8 = Math.ceil(db_lengthofPathdiv8);
+                        int lengthofPathdiv8 = (int) rnd_db_lengthofPathdiv8;
+                        int different = biggestPathdiv8 - lengthofPathdiv8;
+                        Print_Path(Path, different);
+                    }
+                }
             }else if (choice.equals("2")){
 
             }else if (choice.equals("3")){
@@ -62,21 +86,27 @@ public class File_Check{
             }else if (choice.equals("4")){
 
             }else if (choice.equals("5")){
+                System.out.println("\nGoodbye " + Name + "!");
                 Run = 0;
             }else {
                 System.out.println("Invalid Choice!");
             }
 
             System.out.println("\n");
-            System.out.println("");
 
         }
 
     }
 
-    public static int Check(){
+    public static int Check(String Path){
 
-        return 1;
+        File File1 = new File(Path);
+        boolean EXST1 = File1.exists();
+        if (EXST1 == true){
+            return 1;
+        }else{
+            return 0;
+        }
     }
 
     public static void Read(){
@@ -176,7 +206,22 @@ public class File_Check{
                 System.out.println("Error: Code 1002\n");
             }
         }
+    }
 
+    public static void Print_Path(String Path, int Diff){
+    
+        int x = Check(File_Paths.get(Diff));
+        System.out.print(Path);
+        for(int i = 0; i < Diff; i++){
+            System.out.print("\t");
+        }
+        System.out.print("\t");
+
+        if (x == 1){
+            System.out.println("Present: Yes");
+        }else if (x == 0){
+            System.out.println("Present: No");
+        }
     }
 
 }
