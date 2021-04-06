@@ -12,6 +12,9 @@ Features in the Program (List is specified as a Linked List)
     c. Delete a path from the List
     d. Clear List Completely
 4. If changes occurred save all the files else skip this step (Use Global Variables to keep track if the files got edited)
+    (1) Variable if the List has been moddified
+    (2) Pin or Name has been modified
+
 */
 
 import java.util.*;
@@ -21,18 +24,21 @@ public class File_Check{
 
     static String Name;
     static String Pin;
+    static int CHG_List = 0;
+    static int CHG_PinorPath = 0;
+    static LinkedList<String> File_Paths = new LinkedList<String>();
 
     public static void main(String[] args){
-
         int Run = 1;
 
         Read();
+        System.out.println("Welcome " + Name + "!\n");
 
-        System.out.println("|---------------------------|");
-        System.out.println("Welcome: " + Name + ",\n");
-        
         while (Run == 1){
 
+            System.out.println("----------------------------");
+            System.out.println("            Menu"            );
+            System.out.println("----------------------------");
             Scanner Scanner = new Scanner(System.in);
             System.out.println("1. Test");
             System.out.println("2. Add File");
@@ -42,6 +48,12 @@ public class File_Check{
             String choice = Scanner.nextLine();
 
             if (choice.equals("1")){
+                
+                System.out.println("\nTesting Files\n");
+                int size = File_Paths.size();
+                for(int i = 0; i < size; i++){
+                    System.out.println(File_Paths.get(i));
+                }
 
             }else if (choice.equals("2")){
 
@@ -55,67 +67,89 @@ public class File_Check{
                 System.out.println("Invalid Choice!");
             }
 
+            System.out.println("\n");
             System.out.println("");
 
         }
 
     }
 
+    public static int Check(){
+
+        return 1;
+    }
+
     public static void Read(){
 
         Scanner Scanner = new Scanner(System.in);
-
+        
         File File1 = new File("File Check Program Files" + File.separator + "pin.txt");
         boolean EXST1 = File1.exists();
-
         File File2 = new File("File Check Program Files" + File.separator + "path.txt");
         boolean EXST2 = File2.exists();
-        
-        if(EXST1 == false){
 
-            System.out.print("Enter your name >> "); 
-            Name = Scanner.nextLine();
-            System.out.println();
-
-            int x = 1;
-            while(x == 1){
-                System.out.print("Enter a 4-digit pin >> "); 
-                Pin = Scanner.nextLine();
-                
-                if (Pin.length() == 4){
-                    x = 0;
-                }else{
-                    System.out.println("Please enter a valid 4-digit pin!\n");
-                }
-            }
-
-            Write(Name, Pin, 1);
-
-        }
-        
-        if (EXST2 == false){
-            Write(null, null, 2); 
-        }
-        
-        try{
-            FileReader fr = new FileReader("File Check Program Files" + File.separator + "pin.txt");
-            BufferedReader br = new BufferedReader(fr);
+        if (EXST1 == true && EXST2 == true){
             
-            String str; 
-            int loop = 0;
-            while ((str = br.readLine()) != null){
-                if (loop == 0){
-                    String[] StrArray = str.split(";");
-                    Name = StrArray[0];
-                    Pin = StrArray[1];
+            try{
+                FileReader fr = new FileReader("File Check Program Files" + File.separator + "pin.txt");
+                BufferedReader br = new BufferedReader(fr);
+                
+                String str; 
+                int loop = 0;
+                while ((str = br.readLine()) != null){
+                    if (loop == 0){
+                        String[] StrArray = str.split(";");
+                        Name = StrArray[0];
+                        Pin = StrArray[1];
+                    }
+                    loop++;     
                 }
-                loop++;     
+            }catch(IOException e){
+                System.out.println("Error: Code 2001\n");
             }
-        }catch(IOException e){
-            System.out.println("Error: Code 2001\n");
-        }
 
-        System.out.println("");
+            try{
+                FileReader fr = new FileReader("File Check Program Files" + File.separator + "path.txt");
+                BufferedReader br = new BufferedReader(fr);
+                
+                String str; 
+                while ((str = br.readLine()) != null){
+                    File_Paths.add(str);
+                }
+
+            }catch(IOException e){
+                System.out.println("Error: Code 2002\n");
+            }
+
+        }else{
+            
+            if(EXST1 == false){
+
+                System.out.print("Enter your name >> "); 
+                Name = Scanner.nextLine();
+                System.out.println();
+
+                int x = 1;
+                while(x == 1){
+                    System.out.print("Enter a 4-digit pin >> "); 
+                    Pin = Scanner.nextLine();
+
+                    if (Pin.length() == 4){
+                        x = 0;
+                    }else{
+                        System.out.println("Please enter a valid 4-digit pin!\n");
+                    }
+                }
+                Write(Name, Pin, 1);
+            }
+            
+            if (EXST2 == false){
+                Write(null, null, 2); 
+            }
+
+            System.out.println("");
+            Read();
+        }
 
     }
 
