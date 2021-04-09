@@ -28,6 +28,7 @@ public class File_Check{
     static int CHG_List = 0;
     static int CHG_PinorPath = 0;
     static LinkedList<String> File_Paths = new LinkedList<String>();
+    static int biggestPathdiv8;
 
     public static void main(String[] args){
         int Run = 1;
@@ -49,39 +50,79 @@ public class File_Check{
             String choice = Scanner.nextLine();
 
             if (choice.equals("1")){
-                int size = File_Paths.size();
-                int biggestPath = 0;
 
-                for(int i = 0; i < size; i++){
-                    String temp = File_Paths.get(i);
-                    if (biggestPath < temp.length()){
-                        biggestPath = temp.length();
-                    }
-                }
-                double db_biggestPath = (double) (biggestPath);
-                double db_biggestPathdiv8 = db_biggestPath / 8;
-                double rnd_db_biggestPathdiv8 = Math.ceil(db_biggestPathdiv8);
-                int biggestPathdiv8 = (int) rnd_db_biggestPathdiv8;
+                int size = File_Paths.size();
+                Storing_Largest_String();
 
                 if (size == 0){
                     System.out.println("\nNo Files to Test");
                 }else{
                     System.out.println("\nTesting Files\n");
-                    for(int i = 0; i < size; i++){
-                        System.out.print("File " + i + "\t");
-                        String Path = File_Paths.get(i);
-                        int lengthofPath = Path.length();
-                        double db_lengthofPath = (double) lengthofPath;
-                        double db_lengthofPathdiv8 = db_lengthofPath / 8;
-                        double rnd_db_lengthofPathdiv8 = Math.ceil(db_lengthofPathdiv8);
-                        int lengthofPathdiv8 = (int) rnd_db_lengthofPathdiv8;
-                        int different = biggestPathdiv8 - lengthofPathdiv8;
-                        Print_Path(Path, different);
+                    Printing_List();
+                }
+
+            }else if (choice.equals("2")){
+                
+                int Add_Run = 1;
+                int Add_CheckEXST = 0;
+                while (Add_Run == 1){
+                    System.out.print("\nEnter File Path >> ");
+                    String Add_Path = Scanner.nextLine();
+                        
+                    for(int i = 0; i < File_Paths.size(); i++){
+                        if (Add_Path.equals(File_Paths.get(i))){
+                            Add_CheckEXST = 1;
+                        }
+                    }
+
+                    if (Add_CheckEXST == 1){
+                        System.out.println("Path Already Exists Try Again!");
+                        Add_CheckEXST = 0;
+                    }else{
+                        System.out.println("Path has been added Sucessfully!");
+                        File_Paths.add(Add_Path);
+                        CHG_List = 1;
+                        Add_Run = 0;
                     }
                 }
-            }else if (choice.equals("2")){
 
             }else if (choice.equals("3")){
+
+                System.out.println("\nDeleting Files\n");
+                Storing_Largest_String();
+                Printing_List();
+
+                int Del_Run = 1;
+                while(Del_Run == 1){
+                    
+                    System.out.print("\nEnter User Pin >> ");
+                    String UIPin = Scanner.nextLine();
+
+                    if(UIPin.equals("-1")){
+                        Del_Run = 0;
+                    }else if (UIPin.equals(Pin)){
+                        int Pick_Del_Run = 1;
+                        while(Pick_Del_Run == 1){
+                            System.out.print("\nEnter Line Number to Delete the Path >> ");
+                            String UI_DEL_Path = Scanner.nextLine();
+
+                            int Del_Path_INT = Integer.parseInt(UI_DEL_Path);  
+                            Del_Path_INT--;
+                            int Max_ListSize = File_Paths.size() + 1;
+
+                            if (0 < Del_Path_INT || Del_Path_INT < Max_ListSize){
+                                File_Paths.remove(Del_Path_INT);
+                                Pick_Del_Run = 0;
+                                Del_Run = 0;
+                            }else{
+                                System.out.println("Invalid Line Number Try Again!");
+                            }
+                        }
+                    }else{
+                        System.out.println("Incorrect Pin Try Again!");
+                        System.out.println("To Exit Enter -1");
+                    }
+                }
 
             }else if (choice.equals("4")){
 
@@ -93,21 +134,68 @@ public class File_Check{
             }
 
             System.out.println("\n");
-
         }
+    }
 
+    public static void Printing_List(){
+        for(int i = 0; i < File_Paths.size(); i++){
+            System.out.print("File " + (i+1) + "\t");
+            String Path = File_Paths.get(i);
+            int lengthofPath = Path.length();
+            double db_lengthofPath = (double) lengthofPath;
+            double db_lengthofPathdiv8 = db_lengthofPath / 8;
+            double rnd_db_lengthofPathdiv8 = Math.ceil(db_lengthofPathdiv8);
+            int lengthofPathdiv8 = (int) rnd_db_lengthofPathdiv8;
+            int different = biggestPathdiv8 - lengthofPathdiv8;
+            Print_Path(Path, different);
+        }
+    }
+
+    public static void Print_Path(String Path, int Diff){
+        int x = Check(Path);
+        System.out.print(Path);
+
+        for(int i = 0; i < Diff; i++){
+            System.out.print("\t");
+        }
+        System.out.print("\t");
+
+        if (x == 1){
+            System.out.println("Present: Yes");
+        }else if (x == 0){
+            System.out.println("Present: No");
+        }
     }
 
     public static int Check(String Path){
+        File File3 = new File(Path);
+        boolean EXST3 = File3.exists();
 
-        File File1 = new File(Path);
-        boolean EXST1 = File1.exists();
-        if (EXST1 == true){
+        if (EXST3 == true){
             return 1;
         }else{
             return 0;
         }
     }
+
+
+    public static void Storing_Largest_String(){
+        int size = File_Paths.size();
+        int biggestPath = 0;
+
+        for(int i = 0; i < size; i++){
+            String temp = File_Paths.get(i);
+            if (biggestPath < temp.length()){
+                biggestPath = temp.length();
+            }
+        }
+        double db_biggestPath = (double) (biggestPath);
+        double db_biggestPathdiv8 = db_biggestPath / 8;
+        double rnd_db_biggestPathdiv8 = Math.ceil(db_biggestPathdiv8);
+        biggestPathdiv8 = (int) rnd_db_biggestPathdiv8;
+    }
+
+
 
     public static void Read(){
 
@@ -208,20 +296,6 @@ public class File_Check{
         }
     }
 
-    public static void Print_Path(String Path, int Diff){
-    
-        int x = Check(File_Paths.get(Diff));
-        System.out.print(Path);
-        for(int i = 0; i < Diff; i++){
-            System.out.print("\t");
-        }
-        System.out.print("\t");
 
-        if (x == 1){
-            System.out.println("Present: Yes");
-        }else if (x == 0){
-            System.out.println("Present: No");
-        }
-    }
 
 }
