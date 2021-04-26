@@ -1,15 +1,13 @@
 /*
 Features in the Program (List is specified as a Linked List)
 1. Read from Files
-    a. Read Password_File (This is needed when modifying a list)
-    b. Read PathList_File (This is where the Path of the files are stored)
+    a. Read Password_File (This is needed when modifying a list)    ✔
+    b. Read PathList_File (This is where the Path of the files are stored)  ✔
 2. Menu
-    a. Test List
+    a. Test List    ✔
     b. Modify List
-3. Settings (AKA Modify List)
-    a. Print List
-    b. Add to List
-    c. Delete a path from the List
+    b. Add to List  ✔
+    c. Delete a path from the List ✔
     d. Clear List Completely
 4. If changes occurred save all the files else skip this step (Use Global Variables to keep track if the files got edited)
     (1) Variable if the List has been moddified
@@ -28,24 +26,26 @@ public class File_Check{
     static int CHG_PinorPath = 0;
     static LinkedList<String> File_Paths = new LinkedList<String>();
     static int Longest_String_Length;
+    static int Longest_FileNum_Length;
 
     public static void main(String[] args){
         int Run = 1;
 
         Read();
         System.out.println("Welcome " + Name + "!\n");
+        Scanner Scanner = new Scanner(System.in);
 
         while (Run == 1){
 
             System.out.println("----------------------------");
             System.out.println("            Menu"            );
             System.out.println("----------------------------");
-            Scanner Scanner = new Scanner(System.in);
-            System.out.println("1. Test");
-            System.out.println("2. Add File");
-            System.out.println("3. Delete File");
-            System.out.println("4. Modify File Path");
-            System.out.print("5. Exit\n>> ");
+            System.out.println("1. Test Paths");
+            System.out.println("2. Add a New Path");
+            System.out.println("3. Delete an Existing Path");
+            System.out.println("4. Modify an Existing Path");
+            System.out.println("5. Clear Entire Path List");
+            System.out.print("6. Exit\n>> ");
             String choice = Scanner.nextLine();
 
             if (choice.equals("1")){
@@ -53,9 +53,9 @@ public class File_Check{
                 int size = File_Paths.size();
                 
                 if (size == 0){
-                    System.out.println("\nNo Files to Test");
+                    System.out.println("\nNo Paths to Test");
                 }else{
-                    System.out.println("\nTesting Files\n");
+                    System.out.println("\nTesting All Paths\n");
                     Storing_Largest_String();
                     Print_Path();
                 }
@@ -75,10 +75,10 @@ public class File_Check{
                     }
 
                     if (Add_CheckEXST == 1){
-                        System.out.println("Path Already Exists Try Again!");
+                        System.out.println("Path already exists, Try Again!");
                         Add_CheckEXST = 0;
                     }else{
-                        System.out.println("Path has been added Sucessfully!");
+                        System.out.println("Path has been added, Sucessfully!");
                         File_Paths.add(Add_Path);
                         CHG_List = 1;
                         Add_Run = 0;
@@ -126,26 +126,42 @@ public class File_Check{
             }else if (choice.equals("4")){
 
             }else if (choice.equals("5")){
+                
+            }else if (choice.equals("6")){
                 System.out.println("\nGoodbye " + Name + "!");
                 Run = 0;
             }else {
                 System.out.println("Invalid Choice!");
             }
 
-            System.out.println("\n");
+            System.out.println("");
         }
+        Scanner.close();
     }
 
     public static void Print_Path(){
 
+        // Future Update! : Add Labels like (Path #) (Path Name) (Present) on top of the prints
+
         for(int i = 0; i < File_Paths.size(); i++){
-            System.out.print("Path " + (i+1) + "\t");
+
+            int Current_FileNum_Length = String.valueOf(i).length();
+
+            //System.out.println(Longest_FileNum_Length);
+            //System.out.println(Current_FileNum_Length);
+
+            System.out.print("Path " + (i + 1));
+            for(int j = 0; j < (Longest_FileNum_Length + 2) - Current_FileNum_Length; j++){
+                System.out.print(" ");
+            }
+            System.out.print("\t"); // Temporary Fix : Remove and look at lines 10, 100, 1000 in the runtime program
+
             String Path = File_Paths.get(i);
             int Path_Size = Path.length();
             int x = Check(Path);
             System.out.print(Path);
 
-            for(int j = 0; j < Longest_String_Length - Path_Size; j++){
+            for(int k = 0; k < Longest_String_Length - Path_Size; k++){
                 System.out.print(" ");
             }
 
@@ -180,6 +196,10 @@ public class File_Check{
             }
         }
         Longest_String_Length = biggestPath;
+
+        Longest_FileNum_Length = String.valueOf(File_Paths.size() - 1).length();
+        //System.out.println(File_Paths.size());
+        //System.out.println(File_Paths.get(10 - 1));
     }
 
     public static void Read(){
@@ -253,7 +273,6 @@ public class File_Check{
             System.out.println("");
             Read();
         }
-
     }
 
     public static void Write(String Data, String Data2, int key){
