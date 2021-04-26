@@ -19,7 +19,6 @@ Features in the Program (List is specified as a Linked List)
 
 import java.util.*;
 import java.io.*;
-import java.lang.Math;
 
 public class File_Check{
 
@@ -28,7 +27,7 @@ public class File_Check{
     static int CHG_List = 0;
     static int CHG_PinorPath = 0;
     static LinkedList<String> File_Paths = new LinkedList<String>();
-    static int biggestPathdiv8;
+    static int Longest_String_Length;
 
     public static void main(String[] args){
         int Run = 1;
@@ -52,13 +51,13 @@ public class File_Check{
             if (choice.equals("1")){
 
                 int size = File_Paths.size();
-                Storing_Largest_String();
-
+                
                 if (size == 0){
                     System.out.println("\nNo Files to Test");
                 }else{
                     System.out.println("\nTesting Files\n");
-                    Printing_List();
+                    Storing_Largest_String();
+                    Print_Path();
                 }
 
             }else if (choice.equals("2")){
@@ -90,7 +89,7 @@ public class File_Check{
 
                 System.out.println("\nDeleting Files\n");
                 Storing_Largest_String();
-                Printing_List();
+                Print_Path();
 
                 int Del_Run = 1;
                 while(Del_Run == 1){
@@ -137,47 +136,38 @@ public class File_Check{
         }
     }
 
-    public static void Printing_List(){
+    public static void Print_Path(){
+
         for(int i = 0; i < File_Paths.size(); i++){
-            System.out.print("File " + (i+1) + "\t");
+            System.out.print("Path " + (i+1) + "\t");
             String Path = File_Paths.get(i);
-            int lengthofPath = Path.length();
-            double db_lengthofPath = (double) lengthofPath;
-            double db_lengthofPathdiv8 = db_lengthofPath / 8;
-            double rnd_db_lengthofPathdiv8 = Math.ceil(db_lengthofPathdiv8);
-            int lengthofPathdiv8 = (int) rnd_db_lengthofPathdiv8;
-            int different = biggestPathdiv8 - lengthofPathdiv8;
-            Print_Path(Path, different);
+            int Path_Size = Path.length();
+            int x = Check(Path);
+            System.out.print(Path);
+
+            for(int j = 0; j < Longest_String_Length - Path_Size; j++){
+                System.out.print(" ");
+            }
+
+            if (x == 1){
+                System.out.println("\t\tPresent: Yes");
+            }else if (x == 0){
+                System.out.println("\t\tPresent: No");
+            }
         }
+        
     }
-
-    public static void Print_Path(String Path, int Diff){
-        int x = Check(Path);
-        System.out.print(Path);
-
-        for(int i = 0; i < Diff; i++){
-            System.out.print("\t");
-        }
-        System.out.print("\t");
-
-        if (x == 1){
-            System.out.println("Present: Yes");
-        }else if (x == 0){
-            System.out.println("Present: No");
-        }
-    }
-
+    
     public static int Check(String Path){
         File File3 = new File(Path);
         boolean EXST3 = File3.exists();
-
+        
         if (EXST3 == true){
             return 1;
         }else{
             return 0;
         }
     }
-
 
     public static void Storing_Largest_String(){
         int size = File_Paths.size();
@@ -189,13 +179,8 @@ public class File_Check{
                 biggestPath = temp.length();
             }
         }
-        double db_biggestPath = (double) (biggestPath);
-        double db_biggestPathdiv8 = db_biggestPath / 8;
-        double rnd_db_biggestPathdiv8 = Math.ceil(db_biggestPathdiv8);
-        biggestPathdiv8 = (int) rnd_db_biggestPathdiv8;
+        Longest_String_Length = biggestPath;
     }
-
-
 
     public static void Read(){
 
@@ -240,7 +225,7 @@ public class File_Check{
             }
 
         }else{
-            
+
             if(EXST1 == false){
 
                 System.out.print("Enter your name >> "); 
@@ -295,7 +280,5 @@ public class File_Check{
             }
         }
     }
-
-
 
 }
