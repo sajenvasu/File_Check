@@ -43,8 +43,8 @@ public class File_Check{
             System.out.println("1. Test Paths");
             System.out.println("2. Add a New Path");
             System.out.println("3. Delete an Existing Path");
-            System.out.println("4. Modify an Existing Path");
-            System.out.println("5. Clear Entire Path List");
+            System.out.println("4. Clear Entire Path List");
+            System.out.println("5. Settings");
             System.out.print("6. Exit\n>> ");
             String choice = Scanner.nextLine();
 
@@ -56,7 +56,6 @@ public class File_Check{
                     System.out.println("\nNo Paths to Test");
                 }else{
                     System.out.println("\nTesting All Paths\n");
-                    Storing_Largest_String();
                     Print_Path();
                 }
 
@@ -88,7 +87,6 @@ public class File_Check{
             }else if (choice.equals("3")){
 
                 System.out.println("\nDeleting Files\n");
-                Storing_Largest_String();
                 Print_Path();
 
                 int Del_Run = 1;
@@ -111,6 +109,7 @@ public class File_Check{
 
                             if (0 < Del_Path_INT || Del_Path_INT < Max_ListSize){
                                 File_Paths.remove(Del_Path_INT);
+                                CHG_List = 1;
                                 Pick_Del_Run = 0;
                                 Del_Run = 0;
                             }else{
@@ -128,6 +127,10 @@ public class File_Check{
             }else if (choice.equals("5")){
                 
             }else if (choice.equals("6")){
+                if (CHG_List == 1){
+                    Write(null, null, 3);
+                }
+
                 System.out.println("\nGoodbye " + Name + "!");
                 Run = 0;
             }else {
@@ -141,14 +144,25 @@ public class File_Check{
 
     public static void Print_Path(){
 
-        // Future Update! : Add Labels like (Path #) (Path Name) (Present) on top of the prints
+        // Storing the longest Length of the String
+        int size = File_Paths.size();
+        int biggestPath = 0;
 
+        for(int i = 0; i < size; i++){
+            String temp = File_Paths.get(i);
+            if (biggestPath < temp.length()){
+                biggestPath = temp.length();
+            }
+        }
+        Longest_String_Length = biggestPath;
+        Longest_FileNum_Length = String.valueOf(File_Paths.size() - 1).length();
+
+        
+        // Printing the File Path
+        // Future Update! : Add Labels like (Path #) (Path Name) (Present) on top of the prints
         for(int i = 0; i < File_Paths.size(); i++){
 
             int Current_FileNum_Length = String.valueOf(i).length();
-
-            //System.out.println(Longest_FileNum_Length);
-            //System.out.println(Current_FileNum_Length);
 
             System.out.print("Path " + (i + 1));
             for(int j = 0; j < (Longest_FileNum_Length + 2) - Current_FileNum_Length; j++){
@@ -185,26 +199,7 @@ public class File_Check{
         }
     }
 
-    public static void Storing_Largest_String(){
-        int size = File_Paths.size();
-        int biggestPath = 0;
-
-        for(int i = 0; i < size; i++){
-            String temp = File_Paths.get(i);
-            if (biggestPath < temp.length()){
-                biggestPath = temp.length();
-            }
-        }
-        Longest_String_Length = biggestPath;
-
-        Longest_FileNum_Length = String.valueOf(File_Paths.size() - 1).length();
-        //System.out.println(File_Paths.size());
-        //System.out.println(File_Paths.get(10 - 1));
-    }
-
     public static void Read(){
-
-        Scanner Scanner = new Scanner(System.in);
         
         File File1 = new File("File Check Program Files" + File.separator + "pin.txt");
         boolean EXST1 = File1.exists();
@@ -247,7 +242,8 @@ public class File_Check{
         }else{
 
             if(EXST1 == false){
-
+                Scanner Scanner = new Scanner(System.in);
+                
                 System.out.print("Enter your name >> "); 
                 Name = Scanner.nextLine();
                 System.out.println();
@@ -264,6 +260,7 @@ public class File_Check{
                     }
                 }
                 Write(Name, Pin, 1);
+                Scanner.close();
             }
             
             if (EXST2 == false){
@@ -273,6 +270,7 @@ public class File_Check{
             System.out.println("");
             Read();
         }
+
     }
 
     public static void Write(String Data, String Data2, int key){
@@ -297,6 +295,31 @@ public class File_Check{
             }catch (Exception ex){
                 System.out.println("Error: Code 1002\n");
             }
+        }else if (key == 3){
+            
+            int size = File_Paths.size(); 
+
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter("File Check Program Files" + File.separator + "path.txt"))){
+                writer.write("");
+            }catch (Exception ex){
+                System.out.println("Error: Code 1003\n");
+            }
+
+            if (size == 0){
+                
+            }else{
+                
+                try (BufferedWriter writer = new BufferedWriter(new FileWriter("File Check Program Files" + File.separator + "path.txt"))){
+                    for(int i = 0; i < size; i++){
+                        writer.append(File_Paths.get(i) + "\n");
+                    }
+                }catch (Exception ex){
+                    System.out.println("Error: Code 1003\n");
+                }
+
+            }
+
+            
         }
     }
 
