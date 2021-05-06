@@ -23,7 +23,6 @@ public class File_Check{
     static String Name;
     static String Pin;
     static int CHG_List = 0;
-    static int CHG_PinorPath = 0;
     static LinkedList<String> File_Paths = new LinkedList<String>();
     static int Longest_String_Length;
     static int Longest_FileNum_Length;
@@ -86,43 +85,60 @@ public class File_Check{
 
             }else if (choice.equals("3")){
 
-                System.out.println("\nDeleting Files\n");
-                Print_Path();
-
-                int Del_Run = 1;
-                while(Del_Run == 1){
-                    
-                    System.out.print("\nEnter User Pin >> ");
-                    String UIPin = Scanner.nextLine();
-
-                    if(UIPin.equals("-1")){
-                        Del_Run = 0;
-                    }else if (UIPin.equals(Pin)){
-                        int Pick_Del_Run = 1;
-                        while(Pick_Del_Run == 1){
-                            System.out.print("\nEnter Line Number to Delete the Path >> ");
-                            String UI_DEL_Path = Scanner.nextLine();
-
-                            int Del_Path_INT = Integer.parseInt(UI_DEL_Path);  
-                            Del_Path_INT--;
-                            int Max_ListSize = File_Paths.size() + 1;
-
-                            if (0 < Del_Path_INT || Del_Path_INT < Max_ListSize){
-                                File_Paths.remove(Del_Path_INT);
-                                CHG_List = 1;
-                                Pick_Del_Run = 0;
-                                Del_Run = 0;
-                            }else{
-                                System.out.println("Invalid Line Number Try Again!");
+                int size = File_Paths.size();
+                
+                if (size == 0){
+                    System.out.println("\nNo Paths to Delete");
+                }else{
+                 
+                    System.out.println("\nDeleting Files\n");
+                    Print_Path();
+    
+                    int Del_Run = 1;
+                    while(Del_Run == 1){
+                        
+                        System.out.print("\nEnter User Pin >> ");
+                        String UIPin = Scanner.nextLine();
+    
+                        if(UIPin.equals("-1")){
+                            Del_Run = 0;
+                        }else if (UIPin.equals(Pin)){
+                            int Pick_Del_Run = 1;
+                            while(Pick_Del_Run == 1){
+                                System.out.print("\nEnter Line Number to Delete the Path >> ");
+                                String UI_DEL_Path = Scanner.nextLine();
+    
+                                int Del_Path_INT = Integer.parseInt(UI_DEL_Path);  
+                                Del_Path_INT--;
+                                int Max_ListSize = File_Paths.size() + 1;
+    
+                                if (0 < Del_Path_INT || Del_Path_INT < Max_ListSize){
+                                    File_Paths.remove(Del_Path_INT);
+                                    CHG_List = 1;
+                                    Pick_Del_Run = 0;
+                                    Del_Run = 0;
+                                }else{
+                                    System.out.println("Invalid Line Number Try Again!");
+                                }
                             }
+                        }else{
+                            System.out.println("Incorrect Pin Try Again!");
+                            System.out.println("To Exit Enter -1");
                         }
-                    }else{
-                        System.out.println("Incorrect Pin Try Again!");
-                        System.out.println("To Exit Enter -1");
                     }
                 }
 
+
+
             }else if (choice.equals("4")){
+                
+                int size = File_Paths.size();
+                
+                if (size == 0){
+                    System.out.println("\nNo Paths to clear");
+                }else{
+                    File_Paths.clear();
+                }
 
             }else if (choice.equals("5")){
                 
@@ -133,6 +149,7 @@ public class File_Check{
 
                 System.out.println("\nGoodbye " + Name + "!");
                 Run = 0;
+
             }else {
                 System.out.println("Invalid Choice!");
             }
@@ -243,7 +260,7 @@ public class File_Check{
 
             if(EXST1 == false){
                 Scanner Scanner = new Scanner(System.in);
-                
+
                 System.out.print("Enter your name >> "); 
                 Name = Scanner.nextLine();
                 System.out.println();
