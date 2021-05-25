@@ -5,10 +5,10 @@ Features in the Program (List is specified as a Linked List)
     b. Read PathList_File (This is where the Path of the files are stored)  ✔
 2. Menu
     a. Test List    ✔
-    b. Modify List
     b. Add to List  ✔
     c. Delete a path from the List ✔
-    d. Clear List Completely
+    d. Clear List Completely ✔
+    e. Settings
 4. If changes occurred save all the files else skip this step (Use Global Variables to keep track if the files got edited)
     (1) Variable if the List has been moddified
     (2) Pin or Name has been modified
@@ -23,6 +23,7 @@ public class File_Check{
     static String Name;
     static String Pin;
     static int CHG_List = 0;
+    static int CHG_PIN = 0;
     static LinkedList<String> File_Paths = new LinkedList<String>();
     static int Longest_String_Length;
     static int Longest_FileNum_Length;
@@ -141,10 +142,81 @@ public class File_Check{
                 }
 
             }else if (choice.equals("5")){
+                int Set_Run = 1;
+
+                while(Set_Run == 1){
+
+                    System.out.println("");
+                    System.out.println("----------------------------");
+                    System.out.println("          Settings"          );
+                    System.out.println("----------------------------");
+                    System.out.println("1. Change Name");
+                    System.out.println("2. Change Pin");
+                    System.out.print("3. Exit\n>> ");
+                    String settingschoice = Scanner.nextLine();
+
+                    if (settingschoice.equals("1")){
+
+                        System.out.print("\nEnter New Name >> ");
+                        Name = Scanner.nextLine();
+                        System.out.println("Name has changed successfully!");
+                        CHG_PIN = 1;
+
+                    }else if (settingschoice.equals("2")){
+                        int ChangePinRun = 1;
+                        
+                        while(ChangePinRun == 1){
+
+                            System.out.print("\nEnter User Pin >> ");
+                            String temp_pin = Scanner.nextLine();
+
+                            if (temp_pin.equals(Pin)){
+
+                                System.out.print("\nEnter New Pin(1) >> ");
+                                String txt1 = Scanner.nextLine();
+                                System.out.print("\nEnter New Pin(2) >> ");
+                                String txt2 = Scanner.nextLine();
+
+                                if (txt1.equals("-1") || txt2.equals("-1")){
+                                    ChangePinRun = 0;
+                                }
+
+                                if (txt1.length() == 4 && txt2.length() == 4){
+                                    if (txt1.equals(txt2)){
+                                        Pin = txt1;
+                                        System.out.print("\nPin has been changed succesfully\n");
+                                        CHG_PIN = 1;
+                                        ChangePinRun = 0;
+                                    }else{
+                                        System.out.print("Pin does not match\n");
+                                    }
+                                }else{
+                                    System.out.print("Pin must be 4 digits in length!\n");
+                                }
+                                
+                            }else{
+                                if (temp_pin.equals("-1")){
+                                    ChangePinRun = 0;
+                                }
+                                System.out.print("Current Pin incorrect, To exit anytime enter -1\n");
+                            }
+                        }
+
+                    }else if (settingschoice.equals("3")){ 
+                        Set_Run = 0; 
+                    }else{
+                        System.out.println("Invalid Choice!");
+                    }
+                }
                 
             }else if (choice.equals("6")){
                 if (CHG_List == 1){
-                    Write(null, null, 3);
+                    //Write(null, null, 4);
+                }
+
+                if (CHG_PIN == 1){
+                    System.out.println("Code Works");
+                    //Write(null, null, 3);
                 }
 
                 System.out.println("\nGoodbye " + Name + "!");
@@ -335,7 +407,10 @@ public class File_Check{
                 }
 
             }
-
+            
+        }else if (key == 4){
+            
+        }else if (key == 5){
             
         }
     }
