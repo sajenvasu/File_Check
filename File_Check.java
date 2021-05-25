@@ -210,20 +210,28 @@ public class File_Check{
                 }
                 
             }else if (choice.equals("6")){
-                if (CHG_List == 1){
-                    //Write(null, null, 4);
-                }
 
-                if (CHG_PIN == 1){
-                    System.out.println("Code Works");
-                    //Write(null, null, 3);
+                if (CHG_List == 1 && CHG_PIN == 1){
+                    Write(null, null, 4);
+                }else{
+
+                    if (CHG_List == 1){
+                        Write(null, null, 4);
+                    }
+                    
+                    if (CHG_PIN == 1){
+                        System.out.println("Code Works");
+                        Write(null, null, 4);
+                    }
                 }
 
                 System.out.println("\nGoodbye " + Name + "!");
                 Run = 0;
 
             }else {
+
                 System.out.println("Invalid Choice!");
+                
             }
 
             System.out.println("");
@@ -372,18 +380,22 @@ public class File_Check{
         }
 
         if (key == 1){
+
             try (BufferedWriter writer = new BufferedWriter(new FileWriter("File Check Program Files" + File.separator + "pin.txt"))){
                 writer.write( Data + ";" + Data2);
                 writer.close();
             }catch (Exception ex){
                 System.out.println("Error: Code 1001\n");
             }
-        } else if (key == 2){
+
+        }else if (key == 2){
+
             try (BufferedWriter writer = new BufferedWriter(new FileWriter("File Check Program Files" + File.separator + "path.txt"))){
                 writer.close();
             }catch (Exception ex){
                 System.out.println("Error: Code 1002\n");
             }
+
         }else if (key == 3){
             
             int size = File_Paths.size(); 
@@ -409,9 +421,13 @@ public class File_Check{
             }
             
         }else if (key == 4){
-            
-        }else if (key == 5){
-            
+
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter("File Check Program Files" + File.separator + "pin.txt"))){
+                writer.write( Name + ";" + Pin);
+            }catch (Exception ex){
+                System.out.println("Error: Code 1003\n");
+            }   
+
         }
     }
 
