@@ -8,10 +8,10 @@ Features in the Program (List is specified as a Linked List)
     b. Add to List  ✔
     c. Delete a path from the List ✔
     d. Clear List Completely ✔
-    e. Settings
+    e. Settings ✔
 4. If changes occurred save all the files else skip this step (Use Global Variables to keep track if the files got edited)
-    (1) Variable if the List has been moddified
-    (2) Pin or Name has been modified
+    (1) Variable if the List has been moddified ✔
+    (2) Pin or Name has been modified ✔
 
 */
 
@@ -30,7 +30,7 @@ public class File_Check{
 
     public static void main(String[] args){
         int Run = 1;
-
+        
         Read();
         System.out.println("Welcome " + Name + "!\n");
         Scanner Scanner = new Scanner(System.in);
@@ -139,9 +139,11 @@ public class File_Check{
                     System.out.println("\nNo Paths to clear");
                 }else{
                     File_Paths.clear();
+                    CHG_List = 1;
                 }
 
             }else if (choice.equals("5")){
+                
                 int Set_Run = 1;
 
                 while(Set_Run == 1){
@@ -203,27 +205,27 @@ public class File_Check{
                         }
 
                     }else if (settingschoice.equals("3")){ 
+
                         Set_Run = 0; 
+
                     }else{
+
                         System.out.println("Invalid Choice!");
+
                     }
                 }
                 
             }else if (choice.equals("6")){
 
-                if (CHG_List == 1 && CHG_PIN == 1){
-                    Write(null, null, 4);
-                }else{
-
                     if (CHG_List == 1){
-                        Write(null, null, 4);
+                        // Future update! Use key 1 instead of 4 since key 4 and key 1 does the same 
+                        Write(null, null, 3);
                     }
                     
                     if (CHG_PIN == 1){
-                        System.out.println("Code Works");
                         Write(null, null, 4);
                     }
-                }
+
 
                 System.out.println("\nGoodbye " + Name + "!");
                 Run = 0;
@@ -231,7 +233,7 @@ public class File_Check{
             }else {
 
                 System.out.println("Invalid Choice!");
-                
+
             }
 
             System.out.println("");
@@ -400,14 +402,12 @@ public class File_Check{
             
             int size = File_Paths.size(); 
 
-            try (BufferedWriter writer = new BufferedWriter(new FileWriter("File Check Program Files" + File.separator + "path.txt"))){
-                writer.write("");
-            }catch (Exception ex){
-                System.out.println("Error: Code 1003\n");
-            }
-
             if (size == 0){
-                
+                try (BufferedWriter writer = new BufferedWriter(new FileWriter("File Check Program Files" + File.separator + "path.txt"))){
+                    writer.write("");
+                }catch (Exception ex){
+                    System.out.println("Error: Code 1003\n");
+                }
             }else{
                 
                 try (BufferedWriter writer = new BufferedWriter(new FileWriter("File Check Program Files" + File.separator + "path.txt"))){
