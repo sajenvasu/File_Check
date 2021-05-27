@@ -66,7 +66,7 @@ public class File_Check{
                 while (Add_Run == 1){
                     System.out.print("\nEnter File Path >> ");
                     String Add_Path = Scanner.nextLine();
-                        
+
                     for(int i = 0; i < File_Paths.size(); i++){
                         if (Add_Path.equals(File_Paths.get(i))){
                             Add_CheckEXST = 1;
@@ -129,19 +129,31 @@ public class File_Check{
                     }
                 }
 
-
-
             }else if (choice.equals("4")){
                 
-                int size = File_Paths.size();
-                
-                if (size == 0){
-                    System.out.println("\nNo Paths to clear");
-                }else{
-                    File_Paths.clear();
-                    CHG_List = 1;
-                }
+                int Clear_Run = 1;
+                while(Clear_Run == 1){
 
+                    System.out.print("\nEnter User Pin >> ");
+                    String Temp_Clear_Pin = Scanner.nextLine();
+
+                    if (Pin.equals(Temp_Clear_Pin)){
+                        
+                        int size = File_Paths.size();
+                        
+                        if (size == 0){
+                            System.out.println("\nNo Paths to clear");
+                        }else{
+                            File_Paths.clear();
+                            CHG_List = 1;
+                            System.out.println("\nList has been cleared");
+                        }
+                        Clear_Run = 0;
+                    }else{
+                        System.out.println("\nIncorrect Pin Try Again!");
+                    }                    
+                }
+                
             }else if (choice.equals("5")){
                 
                 int Set_Run = 1;
@@ -197,10 +209,12 @@ public class File_Check{
                                 }
                                 
                             }else{
+                                
                                 if (temp_pin.equals("-1")){
                                     ChangePinRun = 0;
                                 }
-                                System.out.print("Current Pin incorrect, To exit anytime enter -1\n");
+                                System.out.println("Incorrect Pin Try Again!, To Exit Anytime Enter -1");
+                                
                             }
                         }
 
@@ -217,15 +231,14 @@ public class File_Check{
                 
             }else if (choice.equals("6")){
 
-                    if (CHG_List == 1){
-                        // Future update! Use key 1 instead of 4 since key 4 and key 1 does the same 
-                        Write(null, null, 3);
-                    }
+                if (CHG_List == 1){
+                    // Future update! Use key 1 instead of 4 since key 4 and key 1 does the same 
+                    Write(null, null, 3);
+                }
                     
-                    if (CHG_PIN == 1){
-                        Write(null, null, 4);
-                    }
-
+                if (CHG_PIN == 1){
+                    Write(null, null, 4);
+                }
 
                 System.out.println("\nGoodbye " + Name + "!");
                 Run = 0;
@@ -253,22 +266,23 @@ public class File_Check{
                 biggestPath = temp.length();
             }
         }
+
         Longest_String_Length = biggestPath;
         Longest_FileNum_Length = String.valueOf(File_Paths.size() - 1).length();
-
         
         // Printing the File Path
         // Future Update! : Add Labels like (Path #) (Path Name) (Present) on top of the prints
         for(int i = 0; i < File_Paths.size(); i++){
 
             int Current_FileNum_Length = String.valueOf(i).length();
-
             System.out.print("Path " + (i + 1));
+
             for(int j = 0; j < (Longest_FileNum_Length + 2) - Current_FileNum_Length; j++){
                 System.out.print(" ");
             }
+            
             System.out.print("\t"); // Temporary Fix : Remove and look at lines 10, 100, 1000 in the runtime program
-
+            
             String Path = File_Paths.get(i);
             int Path_Size = Path.length();
             int x = Check(Path);
@@ -288,6 +302,7 @@ public class File_Check{
     }
     
     public static int Check(String Path){
+
         File File3 = new File(Path);
         boolean EXST3 = File3.exists();
         
@@ -296,6 +311,7 @@ public class File_Check{
         }else{
             return 0;
         }
+
     }
 
     public static void Read(){
@@ -403,11 +419,13 @@ public class File_Check{
             int size = File_Paths.size(); 
 
             if (size == 0){
+
                 try (BufferedWriter writer = new BufferedWriter(new FileWriter("File Check Program Files" + File.separator + "path.txt"))){
                     writer.write("");
                 }catch (Exception ex){
                     System.out.println("Error: Code 1003\n");
                 }
+                
             }else{
                 
                 try (BufferedWriter writer = new BufferedWriter(new FileWriter("File Check Program Files" + File.separator + "path.txt"))){
