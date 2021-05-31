@@ -178,11 +178,17 @@ public class File_Check{
                     String settingschoice = Scanner.nextLine();
 
                     if (settingschoice.equals("1")){
-
+                        
                         System.out.print("\nEnter New Name >> ");
-                        Name = Scanner.nextLine();
-                        System.out.println("Name has changed successfully!");
-                        CHG_PIN = 1;
+                        String Temp_Name = Scanner.nextLine();
+
+                        if (Temp_Name.equals("-1")){
+
+                        }else{
+                            Name = Temp_Name;
+                            System.out.println("Name has changed successfully!");
+                            CHG_PIN = 1;
+                        }
 
                     }else if (settingschoice.equals("2")){
                         int ChangePinRun = 1;
@@ -192,36 +198,44 @@ public class File_Check{
                             System.out.print("\nEnter User Pin >> ");
                             String temp_pin = Scanner.nextLine();
 
-                            if (temp_pin.equals(Pin)){
+                            if (temp_pin.equals("-1")){
+                                ChangePinRun = 0;
+                            }else if (temp_pin.equals(Pin)){
 
                                 System.out.print("\nEnter New Pin(1) >> ");
                                 String txt1 = Scanner.nextLine();
-                                System.out.print("\nEnter New Pin(2) >> ");
-                                String txt2 = Scanner.nextLine();
 
-                                if (txt1.equals("-1") || txt2.equals("-1")){
+                                if (txt1.equals("-1")){
                                     ChangePinRun = 0;
-                                }
+                                }else{
+                                    
+                                    System.out.print("\nEnter New Pin(2) >> ");
+                                    String txt2 = Scanner.nextLine();
 
-                                if (txt1.length() == 4 && txt2.length() == 4){
-                                    if (txt1.equals(txt2)){
-                                        Pin = txt1;
-                                        System.out.print("\nPin has been changed succesfully\n");
-                                        CHG_PIN = 1;
+                                    if (txt2.equals("-1")){
                                         ChangePinRun = 0;
                                     }else{
-                                        System.out.print("Pin does not match\n");
+                                        if (txt1.length() == 4 && txt2.length() == 4){
+                                            if (txt1.equals(txt2)){
+                                                Pin = txt1;
+                                                System.out.print("\nPin has been changed succesfully\n");
+                                                CHG_PIN = 1;
+                                                ChangePinRun = 0;
+                                            }else{
+                                                System.out.print("\nPin does not match\n");
+                                            }
+                                        }else{
+                                            System.out.print("\nPin must be 4 digits in length!\n");
+                                        }
                                     }
-                                }else{
-                                    System.out.print("Pin must be 4 digits in length!\n");
+
+                                    
+                                
                                 }
                                 
                             }else{
-                                
-                                if (temp_pin.equals("-1")){
-                                    ChangePinRun = 0;
-                                }
-                                System.out.println("Incorrect Pin Try Again!, To Exit Anytime Enter -1");
+
+                                System.out.println("Incorrect Pin Try Again!");
                                 
                             }
                         }
