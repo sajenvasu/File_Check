@@ -67,21 +67,26 @@ public class File_Check{
                     System.out.print("\nEnter File Path >> ");
                     String Add_Path = Scanner.nextLine();
 
-                    for(int i = 0; i < File_Paths.size(); i++){
-                        if (Add_Path.equals(File_Paths.get(i))){
-                            Add_CheckEXST = 1;
+                    if (Add_Path.equals("-1")){
+                        Add_Run = 0;
+                    }else{
+                        for(int i = 0; i < File_Paths.size(); i++){
+                            if (Add_Path.equals(File_Paths.get(i))){
+                                Add_CheckEXST = 1;
+                            }
+                        }
+    
+                        if (Add_CheckEXST == 1){
+                            System.out.println("Path already exists, Try Again!");
+                            Add_CheckEXST = 0;
+                        }else{
+                            System.out.println("Path has been added, Sucessfully!");
+                            File_Paths.add(Add_Path);
+                            CHG_List = 1;
+                            Add_Run = 0;
                         }
                     }
 
-                    if (Add_CheckEXST == 1){
-                        System.out.println("Path already exists, Try Again!");
-                        Add_CheckEXST = 0;
-                    }else{
-                        System.out.println("Path has been added, Sucessfully!");
-                        File_Paths.add(Add_Path);
-                        CHG_List = 1;
-                        Add_Run = 0;
-                    }
                 }
 
             }else if (choice.equals("3")){
@@ -124,7 +129,6 @@ public class File_Check{
                             }
                         }else{
                             System.out.println("Incorrect Pin Try Again!");
-                            System.out.println("To Exit Enter -1");
                         }
                     }
                 }
@@ -137,21 +141,25 @@ public class File_Check{
                     System.out.print("\nEnter User Pin >> ");
                     String Temp_Clear_Pin = Scanner.nextLine();
 
-                    if (Pin.equals(Temp_Clear_Pin)){
-                        
-                        int size = File_Paths.size();
-                        
-                        if (size == 0){
-                            System.out.println("\nNo Paths to clear");
-                        }else{
-                            File_Paths.clear();
-                            CHG_List = 1;
-                            System.out.println("\nList has been cleared");
-                        }
-                        Clear_Run = 0;
+                    if (Temp_Clear_Pin.equals("-1")){
+                        Clear_Run = 0;  
                     }else{
-                        System.out.println("\nIncorrect Pin Try Again!");
-                    }                    
+                        if (Pin.equals(Temp_Clear_Pin)){
+                        
+                            int size = File_Paths.size();
+                            
+                            if (size == 0){
+                                System.out.println("\nNo Paths to clear");
+                            }else{
+                                File_Paths.clear();
+                                CHG_List = 1;
+                                System.out.println("\nList has been cleared");
+                            }
+                            Clear_Run = 0;
+                        }else{
+                            System.out.println("\nIncorrect Pin Try Again!");
+                        }                    
+                    }
                 }
                 
             }else if (choice.equals("5")){
