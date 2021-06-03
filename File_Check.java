@@ -95,8 +95,8 @@ public class File_Check{
                 
                 if (size == 0){
                     System.out.println("\nNo Paths to Delete");
+
                 }else{
-                 
                     System.out.println("\nDeleting Files\n");
                     Print_Path();
     
@@ -108,27 +108,37 @@ public class File_Check{
     
                         if(UIPin.equals("-1")){
                             Del_Run = 0;
+
                         }else if (UIPin.equals(Pin)){
                             int Pick_Del_Run = 1;
+
                             while(Pick_Del_Run == 1){
                                 System.out.print("\nEnter Line Number to Delete the Path >> ");
                                 String UI_DEL_Path = Scanner.nextLine();
     
                                 int Del_Path_INT = Integer.parseInt(UI_DEL_Path);  
                                 Del_Path_INT--;
-                                int Max_ListSize = File_Paths.size() + 1;
-    
-                                if (0 < Del_Path_INT || Del_Path_INT < Max_ListSize){
+                                
+                                if (Del_Path_INT == -2){
+                                    Pick_Del_Run = 0;
+                                    Del_Run = 0;
+
+                                }else if(0 > Del_Path_INT || File_Paths.size() < Del_Path_INT || File_Paths.size() == Del_Path_INT){
+                                    System.out.println("\nInvalid Line Number Try Again!");
+
+                                }else{
                                     File_Paths.remove(Del_Path_INT);
                                     CHG_List = 1;
                                     Pick_Del_Run = 0;
                                     Del_Run = 0;
-                                }else{
-                                    System.out.println("Invalid Line Number Try Again!");
+                                    
+                                    
                                 }
+                                
                             }
                         }else{
                             System.out.println("Incorrect Pin Try Again!");
+                            
                         }
                     }
                 }
