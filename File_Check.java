@@ -259,7 +259,7 @@ public class File_Check{
                 }
                     
                 if (CHG_PIN == 1){
-                    Write(null, null, 4);
+                    Write(Name, Pin, 1);
                 }
 
                 System.out.println("\nGoodbye " + Name + "!");
@@ -460,14 +460,6 @@ public class File_Check{
 
             }
             
-        }else if (key == 4){
-
-            try (BufferedWriter writer = new BufferedWriter(new FileWriter("File Check Program Files" + File.separator + "pin.txt"))){
-                writer.write( Name + ";" + Pin);
-            }catch (Exception ex){
-                System.out.println("Error: Code 1003\n");
-            }   
-
         }
     }
 
