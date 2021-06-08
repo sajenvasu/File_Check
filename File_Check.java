@@ -138,7 +138,7 @@ public class File_Check{
                             }
                         }else{
                             System.out.println("Incorrect Pin Try Again!");
-                            
+
                         }
                     }
                 }
@@ -153,6 +153,7 @@ public class File_Check{
 
                     if (Temp_Clear_Pin.equals("-1")){
                         Clear_Run = 0;  
+
                     }else{
                         if (Pin.equals(Temp_Clear_Pin)){
                         
@@ -160,14 +161,17 @@ public class File_Check{
                             
                             if (size == 0){
                                 System.out.println("\nNo Paths to clear");
+
                             }else{
                                 File_Paths.clear();
                                 CHG_List = 1;
                                 System.out.println("\nList has been cleared");
+                                
                             }
                             Clear_Run = 0;
                         }else{
                             System.out.println("\nIncorrect Pin Try Again!");
+
                         }                    
                     }
                 }
@@ -198,6 +202,7 @@ public class File_Check{
                             Name = Temp_Name;
                             System.out.println("Name has changed successfully!");
                             CHG_PIN = 1;
+
                         }
 
                     }else if (settingschoice.equals("2")){
@@ -210,6 +215,7 @@ public class File_Check{
 
                             if (temp_pin.equals("-1")){
                                 ChangePinRun = 0;
+
                             }else if (temp_pin.equals(Pin)){
 
                                 System.out.print("\nEnter New Pin(1) >> ");
@@ -217,6 +223,7 @@ public class File_Check{
 
                                 if (txt1.equals("-1")){
                                     ChangePinRun = 0;
+
                                 }else{
                                     
                                     System.out.print("\nEnter New Pin(2) >> ");
@@ -224,18 +231,23 @@ public class File_Check{
 
                                     if (txt2.equals("-1")){
                                         ChangePinRun = 0;
+
                                     }else{
                                         if (txt1.length() == 4 && txt2.length() == 4){
+
                                             if (txt1.equals(txt2)){
                                                 Pin = txt1;
                                                 System.out.print("\nPin has been changed succesfully\n");
                                                 CHG_PIN = 1;
                                                 ChangePinRun = 0;
+
                                             }else{
                                                 System.out.print("\nPin does not match\n");
+
                                             }
                                         }else{
                                             System.out.print("\nPin must be 4 digits in length!\n");
+
                                         }
                                     }
 
@@ -244,18 +256,15 @@ public class File_Check{
                                 }
                                 
                             }else{
-
                                 System.out.println("Incorrect Pin Try Again!");
                                 
                             }
                         }
 
                     }else if (settingschoice.equals("3")){ 
-
                         Set_Run = 0; 
 
                     }else{
-
                         System.out.println("Invalid Choice!");
 
                     }
@@ -264,25 +273,27 @@ public class File_Check{
             }else if (choice.equals("6")){
 
                 if (CHG_List == 1){
-                    // Future update! Use key 1 instead of 4 since key 4 and key 1 does the same 
                     Write(null, null, 3);
+
                 }
                     
                 if (CHG_PIN == 1){
                     Write(Name, Pin, 1);
+
                 }
 
                 System.out.println("\nGoodbye " + Name + "!");
                 Run = 0;
 
             }else {
-
                 System.out.println("Invalid Choice!");
 
             }
 
             System.out.println("");
+
         }
+        
         Scanner.close();
     }
 
@@ -294,8 +305,10 @@ public class File_Check{
 
         for(int i = 0; i < size; i++){
             String temp = File_Paths.get(i);
+
             if (biggestPath < temp.length()){
                 biggestPath = temp.length();
+            
             }
         }
 
@@ -303,7 +316,6 @@ public class File_Check{
         Longest_FileNum_Length = String.valueOf(File_Paths.size() - 1).length();
         
         // Printing the File Path
-        // Future Update! : Add Labels like (Path #) (Path Name) (Present) on top of the prints
         for(int i = 0; i < File_Paths.size(); i++){
 
             int Current_FileNum_Length = String.valueOf(i).length();
@@ -311,9 +323,10 @@ public class File_Check{
 
             for(int j = 0; j < (Longest_FileNum_Length + 2) - Current_FileNum_Length; j++){
                 System.out.print(" ");
+
             }
             
-            System.out.print("\t"); // Temporary Fix : Remove and look at lines 10, 100, 1000 in the runtime program
+            System.out.print("\t");
             
             String Path = File_Paths.get(i);
             int Path_Size = Path.length();
@@ -322,12 +335,15 @@ public class File_Check{
 
             for(int k = 0; k < Longest_String_Length - Path_Size; k++){
                 System.out.print(" ");
+
             }
 
             if (x == 1){
                 System.out.println("\t\tPresent: Yes");
+
             }else if (x == 0){
                 System.out.println("\t\tPresent: No");
+
             }
         }
         
@@ -340,8 +356,10 @@ public class File_Check{
         
         if (EXST3 == true){
             return 1;
+
         }else{
             return 0;
+
         }
 
     }
@@ -366,11 +384,14 @@ public class File_Check{
                         String[] StrArray = str.split(";");
                         Name = StrArray[0];
                         Pin = StrArray[1];
+
                     }
-                    loop++;     
+                    loop++;   
+
                 }
             }catch(IOException e){
                 System.out.println("Error: Code 2001\n");
+                
             }
 
             try{
@@ -402,20 +423,25 @@ public class File_Check{
 
                     if (Pin.length() == 4){
                         x = 0;
+
                     }else{
                         System.out.println("Please enter a valid 4-digit pin!\n");
+
                     }
                 }
                 Write(Name, Pin, 1);
                 Scanner.close();
+
             }
             
             if (EXST2 == false){
                 Write(null, null, 2); 
+
             }
 
             System.out.println("");
             Read();
+
         }
 
     }
@@ -425,8 +451,10 @@ public class File_Check{
         try {
             File DIR = new File("File Check Program Files");
             DIR.mkdir();
+
         } catch (Exception e) {
             System.out.println("Error: Code 3000\n");
+
         }
 
         if (key == 1){
@@ -434,8 +462,10 @@ public class File_Check{
             try (BufferedWriter writer = new BufferedWriter(new FileWriter("File Check Program Files" + File.separator + "pin.txt"))){
                 writer.write( Data + ";" + Data2);
                 writer.close();
+
             }catch (Exception ex){
                 System.out.println("Error: Code 1001\n");
+
             }
 
         }else if (key == 2){
@@ -454,8 +484,10 @@ public class File_Check{
 
                 try (BufferedWriter writer = new BufferedWriter(new FileWriter("File Check Program Files" + File.separator + "path.txt"))){
                     writer.write("");
+
                 }catch (Exception ex){
                     System.out.println("Error: Code 1003\n");
+
                 }
                 
             }else{
@@ -463,9 +495,11 @@ public class File_Check{
                 try (BufferedWriter writer = new BufferedWriter(new FileWriter("File Check Program Files" + File.separator + "path.txt"))){
                     for(int i = 0; i < size; i++){
                         writer.append(File_Paths.get(i) + "\n");
+
                     }
                 }catch (Exception ex){
                     System.out.println("Error: Code 1003\n");
+
                 }
 
             }
